@@ -1,0 +1,112 @@
+Date - 12-07-26
+
+
+Q.1 What is a linter?
+
+A linter checks your code and finds problems before you run it.
+
+Both ESLint and Oxlint are JavaScript/TypeScript linting tools.
+
+
+Q.2 What is devDependency?
+
+A devDependency is a package needed while developing your project, but usually not directly needed by your application at runtime.
+
+Simple example
+
+Think about building a house 🏠:
+
+Hammer/tools → devDependencies
+Doors/windows → dependencies
+
+
+Q.3 What are dependencies?
+
+Dependencies are packages/libraries that your application needs to work or run.
+
+
+Q.4 What are exports in Javascript?
+
+In React/JavaScript, export is used to make a variable, function, or component available to other files.
+
+There are mainly 2 types of exports.
+
+1. Default export
+function Navbar() {
+  return <h1>Navbar</h1>;
+}
+
+export default Navbar;
+
+Import it:
+
+import Navbar from "./Navbar";
+
+With a default export, you can technically use a different import name:
+
+import MyNavbar from "./Navbar";
+
+✅ Only one default export per file.
+
+2. Named export
+export function Navbar() {
+  return <h1>Navbar</h1>;
+}
+
+export function Footer() {
+  return <h1>Footer</h1>;
+}
+
+Import using { }:
+
+import { Navbar, Footer } from "./components";
+
+The name must match:
+
+import { Navbar } from "./components"; // ✅
+
+import { MyNavbar } from "./components"; // ❌
+
+You can rename it with as:
+
+import { Navbar as MyNavbar } from "./components";
+
+56min
+
+Date - 13-07-26
+
+
+Creating form of login and signup
+
+Absolute & relative css property 
+
+Date 14-07-26
+
+1:08 hrs
+
+
+Date 18-07-26
+1:10 hrs
+
+
+Date 19:07:26
+
+1hr 21 min
+
+Date 21-07-2026
+
+1hr 35 min
+
+charAt()  string method 
+
+Date 22-07-2026
+
+1hr 45 min
+
+Date 23-07-2026
+
+2hr 4 min
+
+
+
+
