@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+import { Plus, Star } from "lucide-react";
 import type { Product } from "../../types";
 import { useNavigate } from "react-router-dom";
 
@@ -69,8 +69,14 @@ const ProductCard = ({ product }: Props) => {
               </span>
             )}
           </div>
-          <button className="">
-            
+          <button
+            className="size-7 rounded-full bg-app-orange text-white flex-center shrink-0hover:bg-app-orange-dark transition-colors active:scale-95"
+            onClick={(e) => {
+              e.stopPropagation();
+              addToCart(product);
+            }}
+          >
+            <Plus className="size-3.5" />
           </button>
         </div>
       </div>
