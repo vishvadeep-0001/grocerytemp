@@ -122,6 +122,8 @@ Date 03-aug-2026
 <button className="" onClick={(e)=> {e.stopPropagation(); addToCart(product)}}> explain
 
 
+2hr 43min complete with moving to sidebar
+
 
 
 
