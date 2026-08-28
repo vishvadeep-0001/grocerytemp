@@ -26,7 +26,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const saved = localStorage.getItem("app_cart");
     return saved ? JSON.parse(saved) : [];
   });
+
+
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+
   useEffect(() => {
     localStorage.setItem("app_cart", JSON.stringify(items));
   }, [items]);
