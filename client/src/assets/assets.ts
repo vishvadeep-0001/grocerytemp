@@ -76,7 +76,7 @@ export const footerData = {
                 { label: "My Account", to: "#" },
                 { label: "Order History", to: "#" },
                 { label: "Addresses", to: "#" },
-                { label: "Help Center", href: "#" },
+                { label: "Help Center", to: "#" },
             ],
         },
     ],
@@ -90,8 +90,8 @@ export const footerData = {
     bottom: {
         copyright: "© 2026 Greatstack. All rights reserved.",
         links: [
-            { label: "Privacy Policy", href: "#" },
-            { label: "Terms of Service", href: "#" },
+            { label: "Privacy Policy", to: "#" },
+            { label: "Terms of Service", to: "#" },
         ],
     },
 };

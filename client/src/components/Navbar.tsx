@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 const Navbar = () => {
   const user: any = null;
@@ -22,10 +23,7 @@ const Navbar = () => {
   //   email: "john@example.com",
   //   isAdmin: "true",
   // };
-  const { cartCount, setIsCartOpen } = {
-    cartCount: 5,
-    setIsCartOpen: (_data: any) => {},
-  };
+  const { cartCount, setIsCartOpen } = useCart()
   const [searchQuery, setSearchQuery] = useState("");
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -55,9 +53,9 @@ const Navbar = () => {
         </Link>
 
         <div className="w-full flex items-center justify-end gap-4 lg:gap-10">
-          <div className="hidden md-flex items-center gap-6 text-sm text-zinc-600">
+          <div className="md-flex items-center gap-6 text-sm text-zinc-600">
             <Link to="/">Home</Link>
-            <Link to="/products">Products</Link>
+            <Link to="/products" className="mx-3">Products</Link>
             <Link to="/deals" className="text-app-orange ">
               Deals
             </Link>

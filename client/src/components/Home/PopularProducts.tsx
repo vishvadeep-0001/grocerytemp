@@ -7,9 +7,11 @@ import ProductCard from "./ProductCard";
 
 const PopularProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
+
   useEffect(() => {
-    setProducts(dummyProducts.slice(0, 10));
-  }, [setProducts]);
+    setProducts(dummyProducts.slice(0, 10))
+  },[]);
+
   return (
     <section className="pb-16">
       <div className="max-w-7xl mx-auto">
@@ -27,6 +29,7 @@ const PopularProducts = () => {
             View All <ArrowRightIcon />
           </Link>
         </div>
+
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 xl:gap-8">
           {products.map((product) => (
             <ProductCard key={product._id} product={product} />
