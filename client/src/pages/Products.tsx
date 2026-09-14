@@ -4,16 +4,20 @@ import type { Product } from "../types/index.ts";
 import { categoriesData, dummyProducts } from "../assets/assets";
 import { Link } from "react-router-dom";
 
-import { Home, HomeIcon } from "lucide-react";
+import { Home } from "lucide-react";
 
 const Products = () => {
+  // console.log("dummyProducts",dummyProducts)
+  // console.log("categoryData", categoriesData)
+
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
-  const category = searchParams.get("category") || "";
+  let category = searchParams.get("category") || "";
+
   const organic = searchParams.get("organic") || "";
   const sort = searchParams.get("sort") || "";
   const page = Number(searchParams.get("page")) || 1;
@@ -23,13 +27,15 @@ const Products = () => {
   const fetchProducts = async () => {
     setLoading(true);
     setProducts(
-      dummyProducts.filter((p) => p.category === category || category === "")
+      dummyProducts.filter((p) => p.category === category || category === ""
+     ),
     );
     setLoading(false);
   };
 
   const updateFilter = (key: string, value: string) => {
-    const newParams = new URLSearchParams(searchParams)
+    const newParams = new URLSearchParams(searchParams);
+
     if (value) {
       newParams.set(key, value);
     } else {
@@ -41,13 +47,12 @@ const Products = () => {
     setSearchParams(newParams);
   };
 
-  const clearFilters = ()=> setSearchParams({});
-  const activeCategory = categoriesData.find((c)=> c.slug === category);
+  const clearFilters = () => setSearchParams({});
+  const activeCategory = categoriesData.find((c) => c.slug === category);
 
-  
   const hasFilters = category || organic || minPrice || maxPrice;
 
- useEffect(() => {
+  useEffect(() => {
     fetchProducts();
   }, [category, organic, sort, page, minPrice, maxPrice]);
 
@@ -56,12 +61,11 @@ const Products = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <nav className="flex items-center gap-2 text-sm text-app-text-light mb-6">
           <Link className="hover:text-app-green transition-colors" to="/">
-            <Home className="size-4"/>
+            <Home className="size-4" />
           </Link>
           <span>/</span>
           <span className="text-app-green font-medium">
-            
-            {activeCategory ? activeCategory.name: "All Products"}
+            {activeCategory ? activeCategory.name : "All Products"}
           </span>
         </nav>
       </div>
