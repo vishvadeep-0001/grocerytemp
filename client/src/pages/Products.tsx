@@ -4,12 +4,10 @@ import type { Product } from "../types/index.ts";
 import { categoriesData, dummyProducts } from "../assets/assets";
 import { Link } from "react-router-dom";
 
-import { Home } from "lucide-react";
+import { ChevronDown, Home, SlidersHorizontal } from "lucide-react";
+import ProductCard from "../components/Home/ProductCard.tsx";
 
 const Products = () => {
-  // console.log("dummyProducts",dummyProducts)
-  // console.log("categoryData", categoriesData)
-
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [totalPages, setTotalPages] = useState(1);
@@ -27,8 +25,7 @@ const Products = () => {
   const fetchProducts = async () => {
     setLoading(true);
     setProducts(
-      dummyProducts.filter((p) => p.category === category || category === ""
-     ),
+      dummyProducts.filter((p) => p.category === category || category === ""),
     );
     setLoading(false);
   };
@@ -68,6 +65,78 @@ const Products = () => {
             {activeCategory ? activeCategory.name : "All Products"}
           </span>
         </nav>
+        <div className="flex gap-8 xl:gap-10">
+          <aside className="hidden lg:block w-64 shrink-0">
+            <div className="bg-white rounded-2xl p-4 sticky top-24">
+              <p>Filter</p>
+            </div>
+          </aside>
+          {/* Main Content */}
+          <main className="flex-1">
+            {/* header */}
+            <div className="flex items-center justify-between mb-6">
+              <div className="">
+                <h1 className="text-2xl font-semibold text-app-green">
+                  {activeCategory ? activeCategory.name : "All Products"}
+                </h1>
+                <p className="text-sm text-app-text-light mt-0.5">
+                  {products.length} Products Found
+                </p>
+              </div>
+
+              <div className="flex flex-col lg:items-center gap-3">
+                {/* Mobile filter toogle */}
+                <button
+                  className="lg:hidden flex items-center gap-2 px-3 py-2 text-sm bg-white rounded-xl border border-app-border hover:bg-app-cream transition-colors"
+                  onClick={() => setMobileFilterOpen(true)}
+                >
+                  <SlidersHorizontal className="size-4" />
+                </button>
+                <div className="relative">
+                  <select
+                    name=""
+                    value={sort}
+                    onChange={(e) => updateFilter("sort", e.target.value)}
+                    id=""
+                    className="appearance-none pl-3 pr-8 py-2 text-sm bg-white rounded-xl border border-app-border focus:border-app-green outline-none cursor-pointer"
+                  >
+                    <option value="">Newest</option>
+                    <option value="price_asc">Price : Low - High</option>
+                    <option value="price_desc">Price High - Low</option>
+                    <option value="rating">Top Rated</option>
+                    <option value="name">A-Z</option>
+                  </select>
+                  <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-app-text-light pointer-events-none" />
+                </div>
+              </div>
+            </div>
+            {/* Prodcut grid */}
+            {loading ? (
+              <p>Loading...</p>
+            ) : products.length === 0 ? (
+              <div className="text-center py-16">
+                <p className="text-lg font-semibold text-app-green mb-2">
+                  No Products Found
+                </p>
+                <p className="text-sm text-app-text-light mb-4">
+                  Try adjusting your filters or search terms
+                </p>
+                <button
+                  onClick={clearFilters}
+                  className="px-5 text-sm font-medium bg-app-green text-white rounded-xl hover:bg-app-green-light transition-colors"
+                >
+                  Clear Filters
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 xl:gap-8">
+                {products.map((product)=>product.stock > 0 && (
+                  <ProductCard key={product._id} product={product}/>
+                ))}
+              </div>
+            )}
+          </main>
+        </div>
       </div>
     </div>
   );
