@@ -1,6 +1,5 @@
 import { Toaster } from "react-hot-toast";
-import { Routes } from "react-router-dom";
-import { Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import AppLayout from "./pages/AppLayout";
 import Home from "./pages/Home";
@@ -39,7 +38,7 @@ const App = () => {
           <Route path="products/:id" element={<ProductPage />} />
           <Route path="search" element={<SearchResults />} />
           <Route path="deals" element={<FlashDeals />} />
-          <Route element={<ProtectedRoute/>}>
+          <Route element={<ProtectedRoute />}>
             <Route path="checkout" element={<Checkout />} />
             <Route path="orders" element={<MyOrders />} />
             <Route path="orders/:id" element={<OrderTracking />} />
