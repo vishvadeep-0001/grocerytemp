@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 import { ChevronDown, Home, SlidersHorizontal } from "lucide-react";
 import ProductCard from "../components/Home/ProductCard.tsx";
+import Loading from "../components/Loading.tsx";
 
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -112,7 +113,7 @@ const Products = () => {
             </div>
             {/* Prodcut grid */}
             {loading ? (
-              <p>Loading...</p>
+             <Loading/>
             ) : products.length === 0 ? (
               <div className="text-center py-16">
                 <p className="text-lg font-semibold text-app-green mb-2">
@@ -130,8 +131,30 @@ const Products = () => {
               </div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 xl:gap-8">
-                {products.map((product)=>product.stock > 0 && (
-                  <ProductCard key={product._id} product={product}/>
+                {products.map(
+                  (product) =>
+                    product.stock > 0 && (
+                      <ProductCard key={product._id} product={product} />
+                    ),
+                )}
+              </div>
+            )}
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex-center gap-2 mt-16">
+                {Array.from({
+                  length: totalPages,
+                }).map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      updateFilter("page", String(i + 1));
+                      scrollTo(0, 0);
+                    }}
+                    className={`size-9 rounded-lg text-sm font-medium transition-colors ${page === i + 1 ? "bg-app-green text-white" : "bg-white text-app-text-light hover:bg-app-cream"}`}
+                  >
+                    {i + 1}
+                  </button> 
                 ))}
               </div>
             )}
