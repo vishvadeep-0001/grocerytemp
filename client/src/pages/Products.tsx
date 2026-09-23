@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { ChevronDown, Home, SlidersHorizontal } from "lucide-react";
 import ProductCard from "../components/Home/ProductCard.tsx";
 import Loading from "../components/Loading.tsx";
+import FilterPanel from "../components/FilterPanel.tsx";
 
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -68,8 +69,10 @@ const Products = () => {
         </nav>
         <div className="flex gap-8 xl:gap-10">
           <aside className="hidden lg:block w-64 shrink-0">
-            <div className="bg-white rounded-2xl p-4 sticky top-24">
-              <p>Filter</p>
+            <div className="bg-white rounded-2xl p-2 sticky top-24">
+              <FilterPanel categories={categoriesData}
+              category={category} organic={organic} minPrice={minPrice} maxPrice={maxPrice} updateFilter={updateFilter} clearFilters={clearFilters} hasFilters={hasFilters}
+              />
             </div>
           </aside>
           {/* Main Content */}
