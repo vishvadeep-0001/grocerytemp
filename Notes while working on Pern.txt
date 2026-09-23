@@ -141,7 +141,7 @@ Date 20-09-2026
 04:01:57sec  creating pagination
 04:08:56sec  Creating Filter Panel in Product page.  
 
-
+04:20:47  mobile filter modal start
 
 
 

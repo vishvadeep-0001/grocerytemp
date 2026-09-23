@@ -4,7 +4,7 @@ import type { Product } from "../types/index.ts";
 import { categoriesData, dummyProducts } from "../assets/assets";
 import { Link } from "react-router-dom";
 
-import { ChevronDown, Home, SlidersHorizontal } from "lucide-react";
+import { ChevronDown, Home, SlidersHorizontal, XIcon } from "lucide-react";
 import ProductCard from "../components/Home/ProductCard.tsx";
 import Loading from "../components/Loading.tsx";
 import FilterPanel from "../components/FilterPanel.tsx";
@@ -70,8 +70,15 @@ const Products = () => {
         <div className="flex gap-8 xl:gap-10">
           <aside className="hidden lg:block w-64 shrink-0">
             <div className="bg-white rounded-2xl p-2 sticky top-24">
-              <FilterPanel categories={categoriesData}
-              category={category} organic={organic} minPrice={minPrice} maxPrice={maxPrice} updateFilter={updateFilter} clearFilters={clearFilters} hasFilters={hasFilters}
+              <FilterPanel
+                categories={categoriesData}
+                category={category}
+                organic={organic}
+                minPrice={minPrice}
+                maxPrice={maxPrice}
+                updateFilter={updateFilter}
+                clearFilters={clearFilters}
+                hasFilters={hasFilters}
               />
             </div>
           </aside>
@@ -116,7 +123,7 @@ const Products = () => {
             </div>
             {/* Prodcut grid */}
             {loading ? (
-             <Loading/>
+              <Loading />
             ) : products.length === 0 ? (
               <div className="text-center py-16">
                 <p className="text-lg font-semibold text-app-green mb-2">
@@ -157,13 +164,42 @@ const Products = () => {
                     className={`size-9 rounded-lg text-sm font-medium transition-colors ${page === i + 1 ? "bg-app-green text-white" : "bg-white text-app-text-light hover:bg-app-cream"}`}
                   >
                     {i + 1}
-                  </button> 
+                  </button>
                 ))}
               </div>
             )}
           </main>
         </div>
       </div>
+      {/* Mobile filter modal */}
+      {mobileFilterOpen && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/40 z-50"
+            onClick={() => setMobileFilterOpen(false)}
+          />
+          <div className="fixed bottom-0 left-0 right-0 bg-white z-50 rounded-t-2xl max-h-[80vh] overflow-y-auto animate-slide-in-up">
+            <div className="flex items-center justify-between p-4 border-b border-app-border">
+              <h3 className="text-lg font-semibold text-app-green">Filter</h3>
+              <button onClick={()=> setMobileFilterOpen(false)} className="p-2 hover:bg-app-cream rounded-lg">
+                <XIcon className="size-5" />
+              </button>
+            </div>
+            <div className="p-4">
+              <FilterPanel
+                categories={categoriesData}
+                category={category}
+                organic={organic}
+                minPrice={minPrice}
+                maxPrice={maxPrice}
+                updateFilter={updateFilter}
+                clearFilters={clearFilters}
+                hasFilters={hasFilters}
+              />
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
