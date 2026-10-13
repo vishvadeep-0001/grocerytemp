@@ -4,7 +4,15 @@ import { useEffect, useState } from "react";
 import type { Product } from "../types/index";
 import { dummyProducts } from "../assets/assets";
 import Loading from "../components/Loading";
-import { ArrowBigLeftIcon, HomeIcon, LeafIcon, MinusIcon, PlusIcon, StarIcon } from "lucide-react";
+import {
+  ArrowBigLeftIcon,
+  HomeIcon,
+  LeafIcon,
+  MinusIcon,
+  PlusIcon,
+  ShoppingCartIcon,
+  StarIcon,
+} from "lucide-react";
 
 const ProductPage = () => {
   const currency = import.meta.env.VITE_CURRENCY_SYMBOL || "$";
@@ -30,6 +38,22 @@ const ProductPage = () => {
   const cartItem = items.find((item) => item.product._id === product._id);
   const inCart = !!cartItem;
   const displayQuantity = inCart ? cartItem.quantity : localQuantity;
+
+  const handleMinus = () => {
+    if (inCart) {
+      if (cartItem.quantity > 1)
+        updateQuantity(product._id, cartItem.quantity - 1);
+      else removeFromCart(product._id);
+    } else {
+      setLocalQuantity(Math.max(1, localQuantity - 1));
+    }
+  };
+
+  const handlePlus = () => {
+    if(inCart) updateQuantity(product._id, cartItem.quantity + 1)
+      else setLocalQuantity(localQuantity + 1)
+  };
+
   const categoryLabel = product.category.replace(/-/g, " ");
 
   return (
@@ -70,11 +94,11 @@ const ProductPage = () => {
         <div className="bg-white/50 rounded-2xl overflow-hidden">
           <div className="grid md:grid-cols-2 gap-0">
             {/* left side image */}
-            <div className="relative flex-center p-8 md:p-12 min-h-[320px] md:min-h-[480px]">
+            <div className="relative flex-center p-8 md:p-12 min-h-80 md:min-h-120">
               <img
                 src={product.image}
                 alt={product.name}
-                className="max-h-[360px] w-auto object-contain"
+                className="max-h-90 w-auto object-contain"
               />
               <div className="absolute top-5 left-5 flex flex-wrap gap-1.5">
                 {product.isOrganic && (
@@ -150,18 +174,32 @@ const ProductPage = () => {
               {/* Quantity + Add to cart */}
               <div className="flex items-center gap-3">
                 <div className="flex items-center border border-app-border rounded-xl overflow-hidden">
-                  <button className="p-3 hover:bg-app-cream transition-colors">
-                    <MinusIcon className="w-4 h-4"/>
+                  <button className="p-3 hover:bg-app-cream transition-colors" onClick={handleMinus}>
+                    <MinusIcon className="w-4 h-4" />
                   </button>
                   <span>{displayQuantity}</span>
-                  <button className="p-3 hover:bg-app-cream transition-colors">
-                    <PlusIcon className="w-4 h-4"/>
+                  {/* plus button */}
+
+                  <button className="p-3 hover:bg-app-cream transition-colors" onClick={handlePlus}>
+                    <PlusIcon className="w-4 h-4" />
                   </button>
                 </div>
+                {/* Add to cart */}
+                <button
+                  onClick={() => {
+                    if (!inCart) addToCart(product, localQuantity);
+                  }}
+                  disabled={product.stock === 0}
+                  className={`flex-1 py-3 font-semibold rounded-xl transition-colors flex-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] ${inCart ? "bg-app-cream text-app-green border border-app-green" : "bg-app-orange text-white hover:bg-app-orange-dark"}`}
+                >
+                  <ShoppingCartIcon className="w-4 h-4" />
+                  {inCart ? "Added to Cart" : "Add to Cart"}
+                </button>
               </div>
             </div>
           </div>
         </div>
+        {}
       </div>
     </div>
   );
