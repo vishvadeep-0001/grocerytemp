@@ -6,6 +6,7 @@ import { dummyProducts } from "../assets/assets";
 import Loading from "../components/Loading";
 import {
   ArrowBigLeftIcon,
+  ArrowRightIcon,
   HomeIcon,
   LeafIcon,
   MinusIcon,
@@ -13,6 +14,8 @@ import {
   ShoppingCartIcon,
   StarIcon,
 } from "lucide-react";
+import DummyReviewsSection from "../assets/DummyReviewsSection";
+import ProductCard from "../components/Home/ProductCard";
 
 const ProductPage = () => {
   const currency = import.meta.env.VITE_CURRENCY_SYMBOL || "$";
@@ -50,8 +53,8 @@ const ProductPage = () => {
   };
 
   const handlePlus = () => {
-    if(inCart) updateQuantity(product._id, cartItem.quantity + 1)
-      else setLocalQuantity(localQuantity + 1)
+    if (inCart) updateQuantity(product._id, cartItem.quantity + 1);
+    else setLocalQuantity(localQuantity + 1);
   };
 
   const categoryLabel = product.category.replace(/-/g, " ");
@@ -174,13 +177,19 @@ const ProductPage = () => {
               {/* Quantity + Add to cart */}
               <div className="flex items-center gap-3">
                 <div className="flex items-center border border-app-border rounded-xl overflow-hidden">
-                  <button className="p-3 hover:bg-app-cream transition-colors" onClick={handleMinus}>
+                  <button
+                    className="p-3 hover:bg-app-cream transition-colors"
+                    onClick={handleMinus}
+                  >
                     <MinusIcon className="w-4 h-4" />
                   </button>
                   <span>{displayQuantity}</span>
                   {/* plus button */}
 
-                  <button className="p-3 hover:bg-app-cream transition-colors" onClick={handlePlus}>
+                  <button
+                    className="p-3 hover:bg-app-cream transition-colors"
+                    onClick={handlePlus}
+                  >
                     <PlusIcon className="w-4 h-4" />
                   </button>
                 </div>
@@ -199,7 +208,29 @@ const ProductPage = () => {
             </div>
           </div>
         </div>
-        {}
+        {/* Customer reviews */}
+        {product.reviewCount > 0 && <DummyReviewsSection product={product} />}
+        {/* Related products */}
+        {relatedProducts.length > 0 && (
+          <section className="mt-12 mb-44">
+            <div className="mb-6 flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-semibold text-app-green">Realted Products</h2>
+                <p className="text-sm text-app-text-light mt-1"> More from {categoryLabel}</p>
+              </div>
+              <Link className="text-sm font-semibold text-app-orange hover:text-app-orange-dark flex items-center gap-1 transition-colors" to={`/products?category=${product.category}`}>View All 
+              <ArrowRightIcon className="size-4"/>
+              </Link>
+
+            </div>
+            {/* Related product card */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 xl:gap-8">
+              {relatedProducts.slice(0, 5).map((rp) => (
+                <ProductCard key={rp._id} product={rp} />
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );
